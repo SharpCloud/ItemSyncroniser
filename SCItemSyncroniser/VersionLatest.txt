@@ -1,1 +1,0 @@
-﻿https://sharpcloudonpremupdate.blob.core.windows.net/apidemos/itemsync/SCItemSyncroniser.zip
