@@ -1,0 +1,260 @@
+﻿<Window x:Class="SCItemSyncroniser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:SCItemSyncroniser.Converters"
+        xmlns:viewModels="clr-namespace:SCItemSyncroniser.ViewModels"
+        Title="SharpCloud Item Syncroniser v1.06" Height="550" Width="925" Background="#333333" FontSize="18">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <converters:BoolToVisibility x:Key="BoolToVisibility" />
+        <converters:BoolToCollapsed x:Key="BoolToCollapsed" />
+        <CollectionViewSource x:Key="sourceItemsCvs" x:Name="sourceItemsCvs" Source="{Binding AllDonorItems}" Filter="DonorItemsCVSFilter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition  Height="Auto"/>
+       </Grid.RowDefinitions>
+        <Grid Background="#99000000" Grid.RowSpan="2" ZIndex="10" Visibility="{Binding ShowWaitForm, Converter={StaticResource BoolToVisibility}}">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF00AFFC" Text="Please wait..."  />
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF00AFFC" Text="{Binding Status}"  />
+            </StackPanel>
+        </Grid>
+
+        <TabControl Background="#333333" x:Name="mainTab" SelectionChanged="TabInsert_OnSelectionChanged">
+            <TabItem Header="Credentials" >
+                <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Width="100" Text="Server:" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBox Width="300" Text="{Binding Url, Mode=TwoWay}" x:Name="tbUrl" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Width="100" Text="Username:" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBox Width="300" Text="{Binding UserName, Mode=TwoWay}" x:Name="tbUsername" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Width="100" Text="Password:" Foreground="#FF00AFFC"></TextBlock>
+                        <PasswordBox Width="300"  x:Name="tbPassword" ></PasswordBox>
+                    </StackPanel>
+                    <Grid >
+                        <CheckBox Foreground="#FF00AFFC" IsChecked="{Binding RememberPassword}" Margin="105,0">Remember password</CheckBox>
+                        <Button HorizontalAlignment="Right" Content=" Clear " Margin="5,0" Click="ClickClearPassword"/>
+                    </Grid> 
+                    <Button Content="Save and validate" Width="300" HorizontalAlignment="Left" Margin="105,5,5,5" Click="SaveAndValidateCLick"></Button>
+                </StackPanel>
+
+            </TabItem>
+            <TabItem Header="Reference Stories" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Text="Keep a list of one or more 'reference' stories" Foreground="#FF00AFFC"></TextBlock>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding MasterStories}" x:Name="listMaster" Background="Transparent" Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4" ToolTip="{Binding Description}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Loaded="FrameworkElement_OnLoaded" Height="40" Stretch="UniformToFill"/>
+                                    <TextBlock Text="{Binding Name}" Grid.Column="1" Margin="10,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button Content="Add" Click="AddMasterStoriesClick" Padding="10,5"></Button>
+                        <Button Content="Remove" Click="RemoveMasterStory" Padding="10,5"></Button>
+                    </StackPanel>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Select a story">
+                <Grid>
+                    <Grid x:Name="gridNoStory" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToCollapsed}}">
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Content="Select a new story..." Width="220" Height="40" Click="SelectStoryClick"></Button>
+                            <Rectangle Height="20"></Rectangle>
+                            <Button Content="Select your last story" Width="220" Height="40" Click="SelectLastStoryClick"></Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid x:Name="gridStory" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel VerticalAlignment="Center" >
+                            <Image Height="100" Width="166" x:Name="selectedStoryImage"></Image>
+                            <TextBlock Text="{Binding SelectedStory.Name}" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                            <Button Content="Clear" Width="200" Height="40" Click="Clear_OnClick"></Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Add New Items" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToVisibility}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Selected story: " HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBlock Text="{Binding SelectedStory.Name}" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="310"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Source Items: " HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
+                            <TextBox Grid.Column="1" x:Name="tbSearch" HorizontalAlignment="Stretch" TextChanged="TextBoxBase_OnTextChanged" />
+                        </Grid>
+
+                        <Border Grid.Column="0" Grid.Row="1" Visibility="{Binding AllDonorItems, Converter={StaticResource BoolToCollapsed}}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#FF00AFFC">No Items in Reference stories</TextBlock>
+                        </Border>
+                        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Source={StaticResource sourceItemsCvs}}" x:Name="listAllItems" Background="Transparent" Foreground="White">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4" ToolTip="{Binding Description}">
+                                        <CheckBox VerticalAlignment="Center" Loaded="AllItemsCheckBoxLoaded" Foreground="White" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked">
+                                            <TextBlock>
+                                                <Run Text="{Binding Story.Name}" />
+                                                <Run Text=": " />
+                                                <Run Text="{Binding Name}" />
+                                            </TextBlock>
+                                        </CheckBox>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <Button Click="ClickSelectAll">Select All</Button>
+                            <Button Click="ClickRefreshRefItems">Reload Reference Stories</Button>
+                        </StackPanel>
+                        
+                        
+                        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Grid.RowSpan="2" Margin="20">
+                            <CheckBox x:Name="cbPanels" Content="Panels" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <CheckBox x:Name="cbAttributes" Content="Item Attributes" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <CheckBox x:Name="cbTags" Content="Item Tags" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <CheckBox x:Name="cbResources" Content="Item Resources" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <CheckBox x:Name="cbRels" Content="Relationships" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <CheckBox x:Name="cbWalls" Content="Wall View Positions" IsChecked="True" Foreground="White" Margin="0,1" />
+                            <Button Grid.Column="1" Grid.Row="1" Height="50" Click="ButtAddClick">Add</Button>
+                        </StackPanel>
+                        <Button Grid.Column="1" Grid.Row="2" Click="ClickReloadAllStories">Reload All Stories</Button>
+
+
+                        <TextBlock Grid.Column="2" Text="Items already added" HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
+                        <ListBox Grid.Column="2" Grid.Row="1" ItemsSource="{Binding TargetItems}" x:Name="listItems" Background="Transparent" Foreground="White">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4" ToolTip="{Binding Description}">
+                                        <TextBlock>
+                                            <Run Text="{Binding Name}" />
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Border Grid.Column="2" Grid.Row="1" Visibility="{Binding TargetItems, Converter={StaticResource BoolToCollapsed}}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#FF00AFFC">No referenced items</TextBlock>
+                        </Border>
+
+                        <Button Grid.Column="2" Grid.Row="2" Click="ClickLoadSelected">Reload Selected Story</Button>
+
+
+                    </Grid>
+                </Grid>  
+            </TabItem >
+            <TabItem Header="Resync Existing Items" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToVisibility}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Selected story: " HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBlock Text="{Binding SelectedStory.Name}" HorizontalAlignment="Center" Foreground="White"></TextBlock>
+                    </StackPanel>
+                            
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Modified Items" HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
+                        <ListBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding AllModifiedItems}" x:Name="listAllModifiedItems" Background="Transparent" Foreground="White" SelectedItem="{Binding SelectedModifiedItem, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4" ToolTip="{Binding Description}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox VerticalAlignment="Center" Loaded="CBCheck_OnLoaded" Foreground="White" Checked="ToggleButton_OnCheckedSync" Unchecked="ToggleButton_OnUncheckedSync"/>
+                                            <TextBlock>
+                                            <Run Text="{Binding Story.Name}" />
+                                            <Run Text=": " />
+                                            <Run Text="{Binding Name}" />
+                                            </TextBlock>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Border Grid.Column="0" Grid.Row="1" Visibility="{Binding AllModifiedItems.Count, Converter={StaticResource BoolToCollapsed}}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#FF00AFFC">No items have been changed</TextBlock>
+                        </Border>
+
+                        <StackPanel Grid.Row="3" >
+                            <Button Click="SelectAllClicked">Select All</Button>
+                            <Button Click="ClickReloadAllStories">Reload All and Re-Compare</Button>
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="1" Text="Changes to :" HorizontalAlignment="Center" Foreground="#FF00AFFC">
+                            <Run Text="{Binding SelectedModifiedItem.Name}"></Run>
+                        </TextBlock>
+                        <ListBox Grid.Column="1" Grid.Row="1" Margin="10,0,0,10" ItemsSource="{Binding ModifiedChanges}" x:Name="listItems2" Background="Transparent" Foreground="White" />
+                        <Border Grid.Column="2" Grid.Row="1" Visibility="{Binding ModifiedChanges, Converter={StaticResource BoolToCollapsed}}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#FF00AFFC">Highlighted item is unchanged</TextBlock>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="1" >
+                            <CheckBox x:Name="cbSPanels" Content="Item Panels (Text, Image, Videos)" IsChecked="True" Foreground="White" Margin="20,1" />
+                            <CheckBox x:Name="cbSAttributes" Content="Item Attributes" IsChecked="True" Foreground="White" Margin="20,1" />
+                            <CheckBox x:Name="cbSTags" Content="Item Tags" IsChecked="True" Foreground="White" Margin="20,1" />
+                            <CheckBox x:Name="cbSResources" Content="Item Resources" IsChecked="True" Foreground="White" Margin="20,1" />
+                            <CheckBox x:Name="cbSRelationships" Content="Item Relationships" IsChecked="True" Foreground="White" Margin="20,1" />
+                            <CheckBox x:Name="cbSWalls" Content="Wall View Positions" IsChecked="True" Foreground="White" Margin="20,1" />
+                        </StackPanel>
+                        <Button  Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Click="ButtonSync">Resync Selected</Button>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <TextBlock FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Cyan" Text="{Binding Status}" />
+        <!--<TextBox  FontSize="8" Grid.Row="2" MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" Foreground="Cyan" Text="{Binding Logs}" IsReadOnly="True" Background="Transparent"/>-->
+    </Grid>
+</Window>

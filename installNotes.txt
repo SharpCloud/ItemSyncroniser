@@ -1,0 +1,28 @@
+====================================
+ SharpCloud Item Syncroniser Widget
+========== version 0.99 ============
+
+To install the widget, unzip all the
+files on to you computer.
+
+In the \release folder, double click
+on the file called:
+
+ SCItemSyncroniser.exe
+
+This will only work on Windows PC's
+running .NET 4.5 or later.
+
+
+If you find issues or have problems:
+email: support@sharpcloud.com
+
+To see the latest issues or add your own
+https://my.sharpcloud.com/#RID=c932de0a-aaa3-4b3f-b8e9-f36b4ff36517
+
+To watch a video guide:
+http://youtu.be/-znIewR53rQ
+
+
+
+ 

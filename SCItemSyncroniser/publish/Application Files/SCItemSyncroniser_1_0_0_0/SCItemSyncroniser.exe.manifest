@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="SCItemSyncroniser.exe" version="1.0.0.0" publicKeyToken="6da25398ca9e3398" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="favicon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="SCItemSyncroniser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="SCItemSyncroniser.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="407776">
+      <assemblyIdentity name="Newtonsoft.Json" version="4.5.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>l3mYrsSGOV6rps5WYWSEJaGhgc4Ywsh8YoivYrh9Xso=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SC.Api.dll" size="511488">
+      <assemblyIdentity name="SC.Api" version="1.0.3.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Y1HxNBPEa+eqG+01RY929pZuWbmF50Xjh6/60RKUa8g=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SC.API.ComInterop.dll" size="71168">
+      <assemblyIdentity name="SC.API.ComInterop" version="1.0.3.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>GuQ+mx8hjR/aIdWLI81+gdV9hWOrdUctKsZOLgHYASQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SCItemSyncroniser.exe" size="72144">
+      <assemblyIdentity name="SCItemSyncroniser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>CTg/DFdHJRMQz9JE357fGr2NO+bUkwZhXkXna4kAdhg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SharpZipLib.Silverlight4.dll" size="185344">
+      <assemblyIdentity name="SharpZipLib.Silverlight4" version="0.0.0.0" publicKeyToken="A37EF23ABF01322C" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>dIhX8MrFOafwg8KzIXbadMqjhoyRnkoCu+woP8gMLEE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="favicon.ico" size="2238">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0z1zBVLrp7NfEIyH0sVRX7OqQaKrsrqbaBX6uqCcQbI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="SCItemSyncroniser.exe.config" size="187">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xm4bo26HQ0LNVwz1vdPYtzhkpMnp2AI5i+f0b+OahTI=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=RUSTY-LENOVO\rusty" issuerKeyHash="8e01c02ad2291a136992584063b92f95c8152b99" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>cWEfWyXUGQ0RqUnfFgVVLJksrx12a/vuf5co1TEPKn8=</DigestValue></Reference></SignedInfo><SignatureValue>SLRS8IV0rBuSV4lAO1flza6UjJcNSamDec7Slxy+iVGbLTH90VZRwWL+gHhjVa4Hi3VTeLXStVNyBtY+IF6BhsrUI5NyFbKZ3l4A38RVkwpUFq+fGtxrxbSOFcQwQh3U6bO2XSYUXb2CnYDWMzZU2Tkw1MberOO6kEHzu+H5xu8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>igzzN1C+cMguv6Sm4FlfPZBInyiASMHH+ZqRYv8iwDnEr/BncunJu6qN+FoSzYnvLLZKhQYKZvzQ23YAhOuTp1DHIDB960u91RKV8VUhSRiaTHUj+vyQYaobLfrViBmmWpZDWAZRbkRdUbOu+JxknmUPwqvsPFXLLUqLRQToEPU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="7f2a0f31d528977feefb6b761daf2c992c550516df49a9110d19d4255b1f6171" Description="" Url=""><as:assemblyIdentity name="SCItemSyncroniser.exe" version="1.0.0.0" publicKeyToken="6da25398ca9e3398" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=RUSTY-LENOVO\rusty</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>iu8ZoVoaqbd/3TaPsNzCxtbkBzFijOtic19rndjRsrU=</DigestValue></Reference></SignedInfo><SignatureValue>VrUuALkkaOAxMGUKB0+l5uOUyACRjdVNFWPFl7Jhregf5SkQxRj7p7MSnTMkcatPmGxEdZI9nY6Dd5L1s0zMi15JKqGMfoyVpTpEKF3bnANcZw7umt0cF4tIX4ooyTl2dcao+O464LbMfMyMmW7G74P32KC0nnD3BAKprLObBy0=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>igzzN1C+cMguv6Sm4FlfPZBInyiASMHH+ZqRYv8iwDnEr/BncunJu6qN+FoSzYnvLLZKhQYKZvzQ23YAhOuTp1DHIDB960u91RKV8VUhSRiaTHUj+vyQYaobLfrViBmmWpZDWAZRbkRdUbOu+JxknmUPwqvsPFXLLUqLRQToEPU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB4TCCAUqgAwIBAgIQI6Wc+bG21a9Gr2gpPTzSsDANBgkqhkiG9w0BAQsFADAvMS0wKwYDVQQDHiQAUgBVAFMAVABZAC0ATABFAE4ATwBWAE8AXAByAHUAcwB0AHkwHhcNMTUwMzI1MTUwNTUzWhcNMTYwMzI0MjEwNTUzWjAvMS0wKwYDVQQDHiQAUgBVAFMAVABZAC0ATABFAE4ATwBWAE8AXAByAHUAcwB0AHkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAIoM8zdQvnDILr+kpuBZXz2QSJ8ogEjBx/makWL/IsA5xK/wZ3LpybuqjfhaEs2J7yy2SoUGCmb80Nt2AITrk6dQxyAwfetLvdUSlfFVIUkYmkx1I/r8kGGqGy361YgZplqWQ1gGUW5EXVGzrvicZJ5lD8Kr7DxVyy1Ki0UE6BD1AgMBAAEwDQYJKoZIhvcNAQELBQADgYEAH/xGXC2d3BOGxCQbfG5P+7EdhTmxEbtCdoYU2ixHcsVcPLyi0dFMPaYe7lxIMruktHMmR6w4vqYs/tHmXILg4L5oB3lAuBH1LaJwhKqXlXcIsowop/7A9V2MkCRNgLCJXuVHalKsbniQvL+sz78X7AxF+hNl+WWNX0DLHEiuv4I=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
