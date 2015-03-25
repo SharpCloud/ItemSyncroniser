@@ -1,12 +1,6 @@
 ====================================
  SharpCloud Item Syncroniser Widget
-========== version 0.99 ============
-
-To install the widget, unzip all the
-files on to you computer.
-
-In the \release folder, double click
-on the file called:
+========== version 1.06 ============
 
  SCItemSyncroniser.exe
 
