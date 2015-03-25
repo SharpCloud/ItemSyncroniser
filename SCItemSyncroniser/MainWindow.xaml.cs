@@ -2,21 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SC.API.ComInterop.Models;
 using SCItemSyncroniser.Views;
 using SC.API.ComInterop;
@@ -63,29 +54,6 @@ namespace SCItemSyncroniser
 
 
         }
-
-        private static bool GetRemoteString(string path, out string version)
-        {
-            try
-            {
-                WebRequest request = WebRequest.Create(path);
-                request.Method = WebRequestMethods.Http.Get;
-                using (var resp = (HttpWebResponse)request.GetResponse())
-                {
-                    Stream responseStream = resp.GetResponseStream();
-                    StreamReader reader = new StreamReader(responseStream);
-                    version = (reader.ReadToEnd());
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                version = "error: " + e.Message;
-                return false;
-            }
-        }
-
-
 
         private void SaveAndValidateCLick(object sender, RoutedEventArgs e)
         {
