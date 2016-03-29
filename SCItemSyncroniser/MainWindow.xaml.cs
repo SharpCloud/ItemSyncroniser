@@ -40,6 +40,7 @@ namespace SCItemSyncroniser
             tbUrl.Text = _viewModel.Url;
             tbUsername.Text = _viewModel.UserName;
             tbPassword.Password = _viewModel.Password;
+            tbProxy.Text = _viewModel.Proxy;
 
             sourceItems = this.FindResource("sourceItemsCvs") as CollectionViewSource;
             sourceItems.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
