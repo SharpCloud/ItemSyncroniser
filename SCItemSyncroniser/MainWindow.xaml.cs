@@ -83,8 +83,9 @@ namespace SCItemSyncroniser
             _viewModel.UserName = tbUsername.Text;
             _viewModel.Url = tbUrl.Text;
             _viewModel.Password = tbPassword.Password;
-            
-            return new SharpCloudApi(_viewModel.UserName, _viewModel.Password, _viewModel.Url);
+            _viewModel.Proxy = tbProxy.Text;
+
+            return new SharpCloudApi(_viewModel.UserName, _viewModel.Password, _viewModel.Url, _viewModel.Proxy);
         }
 
         private void AddMasterStoriesClick(object sender, RoutedEventArgs e)

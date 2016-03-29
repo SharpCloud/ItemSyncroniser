@@ -32,6 +32,11 @@
                         <TextBox Width="300" Text="{Binding Url, Mode=TwoWay}" x:Name="tbUrl" ></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Width="100" Text="Proxy:" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBox Width="300" Text="{Binding Proxy, Mode=TwoWay}" x:Name="tbProxy" ></TextBox>
+                        <TextBlock Width="100" Text="  (optional)" Foreground="#FF00AFFC"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
                         <TextBlock Width="100" Text="Username:" Foreground="#FF00AFFC"></TextBlock>
                         <TextBox Width="300" Text="{Binding UserName, Mode=TwoWay}" x:Name="tbUsername" ></TextBox>
                     </StackPanel>
