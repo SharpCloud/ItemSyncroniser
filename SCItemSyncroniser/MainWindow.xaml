@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:SCItemSyncroniser.Converters"
         xmlns:viewModels="clr-namespace:SCItemSyncroniser.ViewModels"
-        Title="SharpCloud Item Syncroniser v1.06" Height="550" Width="925" Background="#333333" FontSize="18">
+        Title="SharpCloud Item Syncroniser v1.08" Height="550" Width="925" Background="#333333" FontSize="18">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
