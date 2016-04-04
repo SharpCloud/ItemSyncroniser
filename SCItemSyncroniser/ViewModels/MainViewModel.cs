@@ -31,6 +31,9 @@ namespace SCItemSyncroniser.ViewModels
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Proxy { get; set; }
+        public bool ProxyAnnonymous { get; set; }
+        public string ProxyUserName { get; set; }
+        public string ProxyPassword { get; set; }
 
         public bool RememberPassword 
         { get { return _rememberPassword; }
@@ -206,6 +209,9 @@ namespace SCItemSyncroniser.ViewModels
             if (RememberPassword)
                 ModelHelper.RegWrite("Password2", Convert.ToBase64String( Encoding.Default.GetBytes(Password)));
             ModelHelper.RegWrite("Proxy", Proxy);
+            ModelHelper.RegWrite("ProxyAnnonymous", ProxyAnnonymous.ToString());
+            ModelHelper.RegWrite("ProxyUserName", ProxyUserName);
+            ModelHelper.RegWrite("ProxyPassword", Convert.ToBase64String(Encoding.Default.GetBytes(ProxyPassword)));
         }
 
         public void SaveAllData()
@@ -224,6 +230,9 @@ namespace SCItemSyncroniser.ViewModels
 
         public void LoadData()
         {
+            ProxyPassword = Encoding.Default.GetString(Convert.FromBase64String(ModelHelper.RegRead("ProxyPassword", "")));
+            ProxyUserName = ModelHelper.RegRead("ProxyUserName", "");
+            ProxyAnnonymous = Boolean.Parse(ModelHelper.RegRead("ProxyAnnonymous", true.ToString()));
             Proxy = ModelHelper.RegRead("Proxy", "");
             Url = ModelHelper.RegRead("Url", "https://my.sharpcloud.com");
             UserName = ModelHelper.RegRead("UserName", "");

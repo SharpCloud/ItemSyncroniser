@@ -27,7 +27,7 @@
     <InstallUrl>https://sharpcloudonpremupdate.blob.core.windows.net/apidemos/itemsync/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -73,18 +73,19 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SC.Api, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCloud.ClientAPI.1.0.4\lib\SC.Api.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SC.Api, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\sharpcloud\Solutions\SC.API.ComInterop\bin\Release\SC.Api.dll</HintPath>
     </Reference>
-    <Reference Include="SC.API.ComInterop, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCloud.ClientAPI.1.0.4\lib\SC.API.ComInterop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SC.API.ComInterop, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\sharpcloud\Solutions\SC.API.ComInterop\bin\Release\SC.API.ComInterop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -102,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolInverse.cs" />
     <Compile Include="Converters\BoolToCollapsed.cs" />
     <Compile Include="Converters\BoolToVisibility.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
@@ -109,6 +111,9 @@
     <Compile Include="Models\StoryLite2.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SelectedStoryViewModel.cs" />
+    <Compile Include="Views\ProxySettings.xaml.cs">
+      <DependentUpon>ProxySettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectStory.xaml.cs">
       <DependentUpon>SelectStory.xaml</DependentUpon>
     </Compile>
@@ -124,6 +129,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ProxySettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SelectStory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -40,7 +40,6 @@ namespace SCItemSyncroniser
             tbUrl.Text = _viewModel.Url;
             tbUsername.Text = _viewModel.UserName;
             tbPassword.Password = _viewModel.Password;
-            tbProxy.Text = _viewModel.Proxy;
 
             sourceItems = this.FindResource("sourceItemsCvs") as CollectionViewSource;
             sourceItems.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
@@ -76,7 +75,7 @@ namespace SCItemSyncroniser
         private bool ValidateCreds()
         {
             return SC.API.ComInterop.SharpCloudApi.UsernamePasswordIsValid(tbUsername.Text, tbPassword.Password,
-                tbUrl.Text);
+                tbUrl.Text, _viewModel.Proxy, _viewModel.ProxyAnnonymous, _viewModel.ProxyUserName, _viewModel.ProxyPassword );
         }
 
         private SharpCloudApi GetApi()
@@ -84,9 +83,8 @@ namespace SCItemSyncroniser
             _viewModel.UserName = tbUsername.Text;
             _viewModel.Url = tbUrl.Text;
             _viewModel.Password = tbPassword.Password;
-            _viewModel.Proxy = tbProxy.Text;
 
-            return new SharpCloudApi(_viewModel.UserName, _viewModel.Password, _viewModel.Url, _viewModel.Proxy);
+            return new SharpCloudApi(_viewModel.UserName, _viewModel.Password, _viewModel.Url, _viewModel.Proxy, _viewModel.ProxyAnnonymous, _viewModel.ProxyUserName, _viewModel.ProxyPassword);
         }
 
         private void AddMasterStoriesClick(object sender, RoutedEventArgs e)
@@ -731,6 +729,12 @@ namespace SCItemSyncroniser
                 if (!SelectedItems.Contains(item))
                     SelectedItems.Add(item);
             }
+        }
+
+        private void Hyperlink_OnClick(object sender, RoutedEventArgs e)
+        {
+            var proxy = new ProxySettings(_viewModel);
+            proxy.ShowDialog();
         }
     }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:SCItemSyncroniser.Converters"
         xmlns:viewModels="clr-namespace:SCItemSyncroniser.ViewModels"
-        Title="SharpCloud Item Syncroniser v1.08" Height="550" Width="925" Background="#333333" FontSize="18">
+        Title="SharpCloud Item Syncroniser v1.09" Height="550" Width="925" Background="#333333" FontSize="18">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
@@ -30,11 +30,7 @@
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <TextBlock Width="100" Text="Server:" Foreground="#FF00AFFC"></TextBlock>
                         <TextBox Width="300" Text="{Binding Url, Mode=TwoWay}" x:Name="tbUrl" ></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Width="100" Text="Proxy:" Foreground="#FF00AFFC"></TextBlock>
-                        <TextBox Width="300" Text="{Binding Proxy, Mode=TwoWay}" x:Name="tbProxy" ></TextBox>
-                        <TextBlock Width="100" Text="  (optional)" Foreground="#FF00AFFC"></TextBlock>
+                        <TextBlock Margin="10,0"><Hyperlink Foreground="#FF00AFFC" Click="Hyperlink_OnClick"> Proxy</Hyperlink></TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <TextBlock Width="100" Text="Username:" Foreground="#FF00AFFC"></TextBlock>
