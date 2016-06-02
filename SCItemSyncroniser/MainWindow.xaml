@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:SCItemSyncroniser.Converters"
         xmlns:viewModels="clr-namespace:SCItemSyncroniser.ViewModels"
-        Title="SharpCloud Item Syncroniser v1.10" Height="550" Width="925" Background="#333333" FontSize="18">
+        Title="SharpCloud Item Syncroniser v1.11" Height="550" Width="925" Background="#333333" FontSize="18">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
@@ -150,6 +150,7 @@
                         
                         
                         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Grid.RowSpan="2" Margin="20">
+                            <CheckBox x:Name="cbCategory" Content="Item Category" IsChecked="True" Foreground="White" Margin="0,1" />
                             <CheckBox x:Name="cbPanels" Content="Panels" IsChecked="True" Foreground="White" Margin="0,1" />
                             <CheckBox x:Name="cbAttributes" Content="Item Attributes" IsChecked="True" Foreground="White" Margin="0,1" />
                             <CheckBox x:Name="cbTags" Content="Item Tags" IsChecked="True" Foreground="White" Margin="0,1" />

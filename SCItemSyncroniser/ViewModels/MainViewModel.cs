@@ -286,7 +286,7 @@ namespace SCItemSyncroniser.ViewModels
             {
                 if (ItemChanges != null && SelectedModifiedItem != null)
                 {
-                    return ItemChanges[SelectedModifiedItem.Id].ToObservableCollection();
+                    return new ObservableCollection<string>(ItemChanges[SelectedModifiedItem.Id]);//.ToObservableCollection();
                 }
 
                 return null; // nothing

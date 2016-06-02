@@ -16,6 +16,7 @@ using SCItemSyncroniser.Models;
 using SCItemSyncroniser.ViewModels;
 using Attribute = SC.API.ComInterop.Models.Attribute;
 using Panel = SC.API.ComInterop.Models.Panel;
+using System.IO;
 
 namespace SCItemSyncroniser
 {
@@ -339,7 +340,7 @@ namespace SCItemSyncroniser
                         // keep a reference for future use
                         newItem.ExternalId = selectedItem.Id;
 
-                        CopyItem(selectedItem, newItem, cbTags.IsChecked == true, cbPanels.IsChecked == true,
+                        CopyItem(selectedItem, newItem, cbCategory.IsChecked==true, cbTags.IsChecked == true, cbPanels.IsChecked == true,
                             cbResources.IsChecked == true, cbAttributes.IsChecked == true, cbWalls.IsChecked==true);
                     }
                 }
@@ -421,7 +422,7 @@ namespace SCItemSyncroniser
 
                         item.Name = selectedItem.Name;
 
-                        CopyItem(selectedItem, item, cbSTags.IsChecked==true, cbSPanels.IsChecked==true, cbSResources.IsChecked==true, cbSAttributes.IsChecked==true, cbSWalls.IsChecked==true);
+                        CopyItem(selectedItem, item, false, cbSTags.IsChecked==true, cbSPanels.IsChecked==true, cbSResources.IsChecked==true, cbSAttributes.IsChecked==true, cbSWalls.IsChecked==true);
                     }
                 }
                 _viewModel.Status = string.Format("{0} new items updated.", count);
@@ -463,7 +464,7 @@ namespace SCItemSyncroniser
             _viewModel.ShowWaitForm = false;
         }
 
-        public void CopyItem(Item source, Item copy, bool btags, bool bpanels, bool breses, bool battr, bool bwall)
+        public void CopyItem(Item source, Item copy, bool bCategory, bool btags, bool bpanels, bool breses, bool battr, bool bwall)
         {
             copy.Description = source.Description;
             copy.ImageId = source.ImageId;
@@ -471,6 +472,20 @@ namespace SCItemSyncroniser
             copy.IsTransparent = source.IsTransparent;
             copy.StartDate = source.StartDate;
             copy.DurationInDays = source.DurationInDays;
+
+            if (bCategory)
+            {
+                // does the new story have the catagory?
+                var cat = copy.Story.Category_FindByName(source.Category.Name);
+                if (cat == null)
+                {   // no, so create 
+                    cat = copy.Story.Category_AddNew(source.Category.Name);
+                    cat.Color = source.Category.Color;
+                    cat.Description = source.Description;
+                }
+                // set the category to match the source (by matching on name).
+                copy.Category = cat;
+            }
 
             if (btags)
             {
@@ -488,11 +503,30 @@ namespace SCItemSyncroniser
                 {
                     var newres = copy.Resource_FindByName(resource.Name);
                     if (newres == null)
-                        copy.Resource_AddName(resource.Name, resource.Description, resource.Url.ToString());
+                    {
+                        if (resource.Type == Resource.ResourceType.File)
+                        {
+                            // download the file
+                            var fileName = Path.GetTempFileName()+ resource.FileExtension;
+                            try
+                            {
+                                resource.DownloadFile(fileName);
+                                copy.Resource_AddFile(fileName, resource.Name);
+                            }
+                            catch (Exception e)
+                            {
+                                // what should we do now?
+                            }
+
+                        }
+                        else
+                            copy.Resource_AddName(resource.Name, resource.Description, resource.Url.ToString());
+                    }
                     else
                     {
                         newres.Description = resource.Description;
-                        newres.Url = resource.Url;
+                        if (newres.Type != Resource.ResourceType.File)
+                            newres.Url = resource.Url;
                     }
                 }
             }
