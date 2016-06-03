@@ -512,10 +512,12 @@ namespace SCItemSyncroniser
                             {
                                 resource.DownloadFile(fileName);
                                 copy.Resource_AddFile(fileName, resource.Name);
+                                File.Delete(fileName); // tidy up
                             }
                             catch (Exception e)
                             {
                                 // what should we do now?
+                                MessageBox.Show($"WARNING: There was an error copying the resource '{resource.Name}'.");
                             }
 
                         }
