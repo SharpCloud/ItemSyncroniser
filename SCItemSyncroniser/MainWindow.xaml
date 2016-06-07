@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:SCItemSyncroniser.Converters"
         xmlns:viewModels="clr-namespace:SCItemSyncroniser.ViewModels"
-        Title="SharpCloud Item Syncroniser v1.11" Height="550" Width="925" Background="#333333" FontSize="18">
+        Title="SharpCloud Item Syncroniser v1.12" Height="550" Width="925" Background="#000000" FontSize="18">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
@@ -25,6 +25,47 @@
         </Grid>
 
         <TabControl Background="#333333" x:Name="mainTab" SelectionChanged="TabInsert_OnSelectionChanged">
+            <TabControl.Resources>
+                <Style TargetType="TabControl">
+                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="#404040"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+
+                </Style>
+                <Style TargetType="TabItem">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid x:Name="gdBorder" Background="#333333">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Name="Border" BorderThickness="1,1,1,0" CornerRadius="0" Margin="2,0" Height="30">
+                                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                ContentSource="Header" Margin="10,2"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <Border x:Name="selectedBorder" Height="2" VerticalAlignment="Bottom" Background="#FF00AFFC"></Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="selectedBorder" Property="Visibility" Value="Visible" />
+                                        <Setter TargetName="gdBorder" Property="Background" Value="#333333" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="selectedBorder" Property="Visibility" Value="Collapsed" />
+                                        <Setter TargetName="gdBorder" Property="Background" Value="#111111" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
             <TabItem Header="Credentials" >
                 <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="5">
@@ -42,9 +83,9 @@
                     </StackPanel>
                     <Grid >
                         <CheckBox Foreground="#FF00AFFC" IsChecked="{Binding RememberPassword}" Margin="105,0">Remember password</CheckBox>
-                        <Button HorizontalAlignment="Right" Content=" Clear " Margin="5,0" Click="ClickClearPassword"/>
-                    </Grid> 
-                    <Button Content="Save and validate" Width="300" HorizontalAlignment="Left" Margin="105,5,5,5" Click="SaveAndValidateCLick"></Button>
+                        <Button HorizontalAlignment="Right" Content=" Clear " Margin="5,0"  Background="#00AFFC" Foreground="White" Click="ClickClearPassword"/>
+                    </Grid>
+                    <Button Content="Save and validate" Width="300" HorizontalAlignment="Left" Margin="105,5,5,5"  Background="#00AFFC" Foreground="White"  Click="SaveAndValidateCLick"></Button>
                 </StackPanel>
 
             </TabItem>
@@ -71,8 +112,8 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <Button Content="Add" Click="AddMasterStoriesClick" Padding="10,5"></Button>
-                        <Button Content="Remove" Click="RemoveMasterStory" Padding="10,5"></Button>
+                        <Button Content="Add" Click="AddMasterStoriesClick"  Background="#00AFFC" Foreground="White" Padding="10,5"></Button>
+                        <Button Content="Remove" Click="RemoveMasterStory"  Background="#00AFFC" Foreground="White" Padding="10,5"></Button>
                     </StackPanel>
                 </Grid>
 
@@ -81,16 +122,16 @@
                 <Grid>
                     <Grid x:Name="gridNoStory" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToCollapsed}}">
                         <StackPanel VerticalAlignment="Center">
-                            <Button Content="Select a new story..." Width="220" Height="40" Click="SelectStoryClick"></Button>
+                            <Button Content="Select a new story..." Width="220" Height="40"  Background="#00AFFC" Foreground="White" Click="SelectStoryClick"></Button>
                             <Rectangle Height="20"></Rectangle>
-                            <Button Content="Select your last story" Width="220" Height="40" Click="SelectLastStoryClick"></Button>
+                            <Button Content="Select your last story" Width="220" Height="40"  Background="#00AFFC" Foreground="White" Click="SelectLastStoryClick"></Button>
                         </StackPanel>
                     </Grid>
                     <Grid x:Name="gridStory" Visibility="{Binding SelectedStory, Converter={StaticResource BoolToVisibility}}">
                         <StackPanel VerticalAlignment="Center" >
                             <Image Height="100" Width="166" x:Name="selectedStoryImage"></Image>
                             <TextBlock Text="{Binding SelectedStory.Name}" HorizontalAlignment="Center" Foreground="White"></TextBlock>
-                            <Button Content="Clear" Width="200" Height="40" Click="Clear_OnClick"></Button>
+                            <Button Content="Clear" Width="200" Height="40"  Background="#00AFFC" Foreground="White" Click="Clear_OnClick"></Button>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -144,8 +185,8 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Grid.Row="2" Grid.Column="0">
-                            <Button Click="ClickSelectAll">Select All</Button>
-                            <Button Click="ClickRefreshRefItems">Reload Reference Stories</Button>
+                            <Button  Background="#00AFFC" Foreground="White" Click="ClickSelectAll">Select All</Button>
+                            <Button  Background="#00AFFC" Foreground="White" Click="ClickRefreshRefItems">Reload Reference Stories</Button>
                         </StackPanel>
                         
                         
@@ -157,9 +198,9 @@
                             <CheckBox x:Name="cbResources" Content="Item Resources" IsChecked="True" Foreground="White" Margin="0,1" />
                             <CheckBox x:Name="cbRels" Content="Relationships" IsChecked="True" Foreground="White" Margin="0,1" />
                             <CheckBox x:Name="cbWalls" Content="Wall View Positions" IsChecked="True" Foreground="White" Margin="0,1" />
-                            <Button Grid.Column="1" Grid.Row="1" Height="50" Click="ButtAddClick">Add</Button>
+                            <Button Grid.Column="1" Grid.Row="1" Height="50"  Background="#00AFFC" Foreground="White" Click="ButtAddClick">Add</Button>
                         </StackPanel>
-                        <Button Grid.Column="1" Grid.Row="2" Click="ClickReloadAllStories">Reload All Stories</Button>
+                        <Button Grid.Column="1" Grid.Row="2"  Background="#00AFFC" Foreground="White" Click="ClickReloadAllStories">Reload All Stories</Button>
 
 
                         <TextBlock Grid.Column="2" Text="Items already added" HorizontalAlignment="Center" Foreground="#FF00AFFC"></TextBlock>
@@ -178,7 +219,7 @@
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#FF00AFFC">No referenced items</TextBlock>
                         </Border>
 
-                        <Button Grid.Column="2" Grid.Row="2" Click="ClickLoadSelected">Reload Selected Story</Button>
+                        <Button Grid.Column="2" Grid.Row="2"  Background="#00AFFC" Foreground="White" Click="ClickLoadSelected">Reload Selected Story</Button>
 
 
                     </Grid>
@@ -230,8 +271,8 @@
                         </Border>
 
                         <StackPanel Grid.Row="3" >
-                            <Button Click="SelectAllClicked">Select All</Button>
-                            <Button Click="ClickReloadAllStories">Reload All and Re-Compare</Button>
+                            <Button Background="#00AFFC" Foreground="White" Click="SelectAllClicked">Select All</Button>
+                            <Button Background="#00AFFC" Foreground="White" Click="ClickReloadAllStories">Reload All and Re-Compare</Button>
                         </StackPanel>
 
                         <TextBlock Grid.Column="1" Text="Changes to :" HorizontalAlignment="Center" Foreground="#FF00AFFC">
@@ -250,13 +291,13 @@
                             <CheckBox x:Name="cbSRelationships" Content="Item Relationships" IsChecked="True" Foreground="White" Margin="20,1" />
                             <CheckBox x:Name="cbSWalls" Content="Wall View Positions" IsChecked="True" Foreground="White" Margin="20,1" />
                         </StackPanel>
-                        <Button  Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Click="ButtonSync">Resync Selected</Button>
+                        <Button  Background="#00AFFC"  Foreground="White"  Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Click="ButtonSync">Resync Selected</Button>
 
                     </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
-        <TextBlock FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Cyan" Text="{Binding Status}" />
+        <TextBlock FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#00AFFC" Text="{Binding Status}" />
         <!--<TextBox  FontSize="8" Grid.Row="2" MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" Foreground="Cyan" Text="{Binding Logs}" IsReadOnly="True" Background="Transparent"/>-->
     </Grid>
 </Window>
