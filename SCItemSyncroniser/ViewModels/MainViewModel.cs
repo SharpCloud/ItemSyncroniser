@@ -454,15 +454,36 @@ namespace SCItemSyncroniser.ViewModels
                             rel = copy.Relationship_FindByItem(item2);
                             if (rel == null)
                                 list.Add(string.Format("Relationship missing to {0}", item2.Name));
+                            else
+                                CheckIfRelationshipsAreDifferent(relationship, rel, list);
                         }
                         else if (item1.Id == copy.Id)
                         {
                             rel = copy.Relationship_FindByItem(item1);
                             if (rel == null)
                                 list.Add(string.Format("Relationship missing to {0}", item1.Name));
+                            CheckIfRelationshipsAreDifferent(relationship, rel, list);
                         }
                     }
-                 }
+                }
+
+                // resources
+                foreach (var res in source.Resources)
+                {
+                    var resNew = copy.Resource_FindByName(res.Name);
+                    if (resNew != null)
+                    {
+                        foreach (var tag in res.Tags)
+                        {
+                            if (resNew.Tag_FindByName(tag.Text) == null)
+                                list.Add($"Tag '{tag.Text}' is missing on Resource '{res.Name}' on item {copy.Name}");
+                        }
+                    }
+                    else
+                    {
+                        list.Add($"Resource '{res.Name}' is missing on item {copy.Name}");
+                    }
+                }
 
 
                 for (int w = 0; w < 24; w++)
@@ -477,6 +498,24 @@ namespace SCItemSyncroniser.ViewModels
             }
                 
             return false;
+        }
+
+        private void CheckIfRelationshipsAreDifferent(Relationship relOrig, Relationship relCopy, List<string> list)
+        {
+
+            if (relOrig.Comment != relCopy.Comment)
+                list.Add($"Comment has changed on relationship between {relCopy.Item1.Name} and {relCopy.Item2.Name}");
+
+            // check the direction
+            if (relOrig.Direction != relCopy.Direction)
+                list.Add($"Direction has changed on relationship between {relCopy.Item1.Name} and {relCopy.Item2.Name}");
+
+            // check all tags
+            foreach (var tag in relOrig.Tags)
+            {
+                if (relCopy.Tag_FindByName(tag.Text) == null)
+                    list.Add($"Tag '{tag.Text}' is missing on relationship between {relCopy.Item1.Name} and {relCopy.Item2.Name}");
+            }
         }
 
 

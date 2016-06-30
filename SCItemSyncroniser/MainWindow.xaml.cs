@@ -522,7 +522,7 @@ namespace SCItemSyncroniser
 
                         }
                         else
-                            copy.Resource_AddName(resource.Name, resource.Description, resource.Url.ToString());
+                            newres = copy.Resource_AddName(resource.Name, resource.Description, resource.Url.ToString());
                     }
                     else
                     {
@@ -530,6 +530,12 @@ namespace SCItemSyncroniser
                         if (newres.Type != Resource.ResourceType.File)
                             newres.Url = resource.Url;
                     }
+                    // make sure tags are allocated
+                    foreach (var tag in resource.Tags)
+                    {
+                        newres.Tag_AddNew(tag.Text);
+                    }
+
                 }
             }
 
